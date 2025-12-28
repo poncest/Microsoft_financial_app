@@ -14,8 +14,8 @@ chart_executive_trend <- function(data) {
       revenue_b = revenue / 1e9,  # Convert to billions for display
       tooltip_revenue = paste0(
         "FY", fiscal_year, "\n",
-        "Revenue: ", fmt_currency(revenue, suffix = "B", scale = 1e-9, digits = 1), "\n",
-        "Op Margin: ", fmt_percent(operating_margin, digits = 1)
+        "Revenue: $", round(revenue_b, 1), "B\n",
+        "Op Margin: ", round(operating_margin * 100, 1), "%"
       )
     )
   
@@ -30,9 +30,9 @@ chart_executive_trend <- function(data) {
       width = 0.7
     ) +
     
-    # Operating margin line
+    # Operating margin line (scaled for dual-axis effect)
     geom_line(
-      aes(y = operating_margin * 600),  # Scale to fit on same chart (hack for visual)
+      aes(y = operating_margin * 600),  # Scale to fit visually
       color = msft_colors$success,
       linewidth = 1.2
     ) +
@@ -42,14 +42,14 @@ chart_executive_trend <- function(data) {
       size = 3
     ) +
     
-    # Dual axis labels (manual)
+    # Dual axis labels
     scale_y_continuous(
       name = "Revenue (Billions USD)",
-      labels = scales::label_dollar(prefix = "$", suffix = "B"),
+      labels = function(x) paste0("$", x, "B"),
       sec.axis = sec_axis(
         ~ . / 600,
         name = "Operating Margin",
-        labels = scales::label_percent()
+        labels = function(x) paste0(round(x * 100), "%")
       )
     ) +
     

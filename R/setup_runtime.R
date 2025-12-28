@@ -57,13 +57,17 @@ theme_msft <- function(base_size = 12) {
 
 # --- Number Formatting Helpers ------------------------------------------------
 
-fmt_currency <- function(x, prefix = "$", suffix = "", digits = 0) {
+fmt_currency <- function(x, prefix = "$", suffix = "", scale = 1, digits = 0) {
+  # Scale the value first
+  x_scaled <- x / scale
+  
+  # Format with scales package
   scales::label_dollar(
     prefix = prefix,
     suffix = suffix,
-    scale = 1e-9,  # Billions
-    accuracy = 10^-digits
-  )(x)
+    accuracy = 10^-digits,
+    big.mark = ","
+  )(x_scaled)
 }
 
 fmt_percent <- function(x, digits = 1) {
