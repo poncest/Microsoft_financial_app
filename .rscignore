@@ -1,0 +1,18 @@
+# Exclude from shinyapps.io deployment
+# (Keeps bundle size small and avoids OS-specific binaries)
+
+renv/library
+renv/staging
+renv/python
+.Rproj.user
+rsconnect
+docs
+screenshots
+_initial_setup
+*.Rproj
+.git
+.gitignore
+README.md
+references.md
+data-raw
+

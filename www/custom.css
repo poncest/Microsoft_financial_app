@@ -1,0 +1,83 @@
+/* ==============================================================================
+   Custom Styling for Microsoft Financial Dashboard
+   Author: Steven Ponce
+   ============================================================================== */
+
+/* --- Card Styling ----------------------------------------------------------- */
+
+.ui.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ui.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Segment Styling -------------------------------------------------------- */
+
+.ui.segment {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Message Box Styling ---------------------------------------------------- */
+
+.ui.message {
+  border-left: 4px solid #0078D4;
+  background-color: #F3F2F1;
+}
+
+.ui.message .header {
+  color: #243A5E;
+  font-weight: bold;
+}
+
+/* --- Tab Content Spacing ---------------------------------------------------- */
+
+.ui.tab {
+  padding: 2em 3em;
+}
+
+/* --- Responsive Adjustments ------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .ui.five.cards > .card {
+    width: 100% !important;
+    margin-bottom: 1em;
+  }
+  
+  .ui.tab {
+    padding: 1em;
+  }
+}
+
+/* --- Button Styling --------------------------------------------------------- */
+
+.ui.button {
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.ui.button:hover {
+  opacity: 0.9;
+}
+
+/* --- Modal Styling ---------------------------------------------------------- */
+
+.ui.modal.about {
+  max-width: 700px;
+}
+
+.ui.modal.about h3 {
+  color: #243A5E;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.ui.modal.about ul, .ui.modal.about ol {
+  margin-left: 1.5em;
+  line-height: 1.8;
+}

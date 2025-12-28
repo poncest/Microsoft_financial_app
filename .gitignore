@@ -1,0 +1,18 @@
+# R & RStudio
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Deployment
+rsconnect/
+
+# Cache & temporary files
+data-raw/cache/*.json
+*.log
+
+# Data (optional — decide if you want to track processed data)
+# data/processed/*.rds
+# data/processed/*.csv
+
