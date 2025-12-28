@@ -8,6 +8,8 @@
 # Deployment
 rsconnect/
 
+_ARCHIVED/
+
 # Cache & temporary files
 data-raw/cache/*.json
 *.log

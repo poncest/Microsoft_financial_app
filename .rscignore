@@ -1,18 +1,23 @@
-# Exclude from shinyapps.io deployment
-# (Keeps bundle size small and avoids OS-specific binaries)
-
-renv/library
-renv/staging
-renv/python
+renv/library/
+renv/staging/
+renv/python/
+_initial_setup/
+data-raw/
+screenshots/
+docs/
+*.qmd
+HANDOFF_DOCUMENT.md
+MIGRATION_GUIDE.md
 .Rproj.user
-rsconnect
-docs
-screenshots
-_initial_setup
-*.Rproj
-.git
+.DS_Store
+.git/
 .gitignore
-README.md
-references.md
-data-raw
+rsconnect/
+_ARCHIVED
 
+# Old files (if you keep them temporarily)
+ui.R
+server.R
+ui_main.R
+ui_tabs.R
+server_charts.R
