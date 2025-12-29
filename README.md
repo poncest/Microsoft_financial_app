@@ -100,5 +100,5 @@ See `references.md` for all source links, XBRL concept definitions, and filing U
 
 ---
 
-**Contact:** [Your LinkedIn / GitHub]  
+**Contact:** Steven Ponce 
 **License:** MIT (code only; data remains property of Microsoft and SEC)

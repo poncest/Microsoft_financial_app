@@ -1,5 +1,6 @@
 # Module: Executive Brief
-# Clean Microsoft design - single blue color, YoY context, side-by-side charts
+# Clean Microsoft design with inline formatting (no helper function dependencies)
+# NOW WITH ALL 5 HYPOTHESIS BOXES
 
 # ==============================================================================
 # UI
@@ -134,7 +135,7 @@ mod_executive_brief_ui <- function(id) {
         style = "color: #605E5C;")
     ),
     
-    # Two Charts Side-by-Side (NO DUAL-AXIS, BOTH BLUE)
+    # Two Charts Side-by-Side
     div(
       class = "ui two column grid",
       style = "margin-top: 1em;",
@@ -164,14 +165,13 @@ mod_executive_brief_ui <- function(id) {
       )
     ),
     
-    # Strategic Hypotheses Summary (NEW SECTION)
+    # STRATEGIC HYPOTHESES SECTION
     div(
-      class = "ui segment",
-      style = "margin-top: 3em; padding: 2.5em; background: white; border-top: 4px solid #0078D4;",
-      h3("Strategic Hypotheses", style = "color: #004578; margin-bottom: 1em;"),
-      p("Five hypotheses tested across financial dimensions", 
-        style = "color: #605E5C; margin-bottom: 1.5em;"),
-      uiOutput(ns("hypothesis_summary"))
+      style = "margin-top: 3em; padding: 2em; background: white; border-radius: 4px; border: 1px solid #E1DFDD;",
+      
+      h3("Strategic Hypotheses", style = "color: #004578; margin-bottom: 1em; border-bottom: 2px solid #0078D4; padding-bottom: 0.5em;"),
+      
+      uiOutput(ns("all_hypotheses"))
     ),
     
     # Key Insights Box
@@ -192,13 +192,13 @@ mod_executive_brief_ui <- function(id) {
 # Server
 # ==============================================================================
 
-mod_executive_brief_server <- function(id, financials, app_metrics) {
+mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
   moduleServer(id, function(input, output, session) {
     
-    # --- KPI Outputs ---
+    # --- KPI Outputs (inline formatting) ---
     
     output$kpi_revenue <- renderText({
-      fmt_currency(app_metrics$latest_revenue, suffix = "B", scale = 1e-9, digits = 1)
+      paste0("$", round(app_metrics$latest_revenue / 1e9, 1), "B")
     })
     
     output$kpi_revenue_context <- renderText({
@@ -210,7 +210,7 @@ mod_executive_brief_server <- function(id, financials, app_metrics) {
     
     output$kpi_gross_margin <- renderText({
       fy2023 <- financials |> filter(fiscal_year == 2023)
-      fmt_percent(fy2023$gross_margin, digits = 1)
+      paste0(round(fy2023$gross_margin * 100, 1), "%")
     })
     
     output$kpi_gross_margin_context <- renderText({
@@ -221,7 +221,7 @@ mod_executive_brief_server <- function(id, financials, app_metrics) {
     })
     
     output$kpi_operating_margin <- renderText({
-      fmt_percent(app_metrics$latest_operating_margin, digits = 1)
+      paste0(round(app_metrics$latest_operating_margin * 100, 1), "%")
     })
     
     output$kpi_operating_margin_context <- renderText({
@@ -232,7 +232,7 @@ mod_executive_brief_server <- function(id, financials, app_metrics) {
     })
     
     output$kpi_fcf <- renderText({
-      fmt_currency(app_metrics$latest_fcf, suffix = "B", scale = 1e-9, digits = 1)
+      paste0("$", round(app_metrics$latest_fcf / 1e9, 1), "B")
     })
     
     output$kpi_fcf_context <- renderText({
@@ -243,10 +243,12 @@ mod_executive_brief_server <- function(id, financials, app_metrics) {
     })
     
     output$kpi_revenue_growth <- renderText({
-      fmt_percent(app_metrics$latest_revenue_growth, digits = 1, include_sign = TRUE)
+      growth_val <- app_metrics$latest_revenue_growth * 100
+      sign <- if(growth_val > 0) "+" else ""
+      paste0(sign, round(growth_val, 1), "%")
     })
     
-    # --- Chart Outputs (Side-by-Side, BOTH MICROSOFT BLUE) ---
+    # --- Chart Outputs ---
     
     output$chart_revenue <- renderGirafe({
       chart_revenue_bars_clean(financials)
@@ -256,106 +258,152 @@ mod_executive_brief_server <- function(id, financials, app_metrics) {
       chart_operating_margin_line(financials)
     })
     
-    # --- Hypothesis Summary (NEW) ---
+    # --- ALL 5 HYPOTHESES ---
     
-    output$hypothesis_summary <- renderUI({
-      
-      # Calculate metrics for each hypothesis
-      cagr_early_pct <- app_metrics$cagr_early * 100
-      cagr_late_pct <- app_metrics$cagr_late * 100
-      growth_acceleration <- cagr_late_pct - cagr_early_pct
+    output$all_hypotheses <- renderUI({
       
       fy2016 <- financials |> filter(fiscal_year == 2016)
       fy2023 <- financials |> filter(fiscal_year == 2023)
       
-      margin_expansion <- (fy2023$operating_margin - fy2016$operating_margin) * 100
+      # H1 metrics
+      cagr_early_pct <- app_metrics$cagr_early * 100
+      cagr_late_pct <- app_metrics$cagr_late * 100
+      cagr_acceleration <- cagr_late_pct - cagr_early_pct
       
       cloud_2016 <- segments |> filter(fiscal_year == 2016, segment == "Intelligent Cloud") |> pull(pct_of_total)
       cloud_2023 <- segments |> filter(fiscal_year == 2023, segment == "Intelligent Cloud") |> pull(pct_of_total)
-      cloud_growth <- (cloud_2023 - cloud_2016) * 100
+      cloud_change <- (cloud_2023 - cloud_2016) * 100
       
+      # H2 metrics
+      op_margin_expansion <- (fy2023$operating_margin - fy2016$operating_margin) * 100
+      avg_rnd <- mean(financials$rnd_intensity, na.rm = TRUE) * 100
+      
+      # H3 metrics
       avg_fcf_margin <- mean(financials$fcf_margin, na.rm = TRUE) * 100
-      asset_efficiency_change <- ((fy2023$revenue_per_asset / fy2016$revenue_per_asset) - 1) * 100
       
-      HTML(sprintf(
-        "
-        <div style='display: grid; grid-template-columns: 1fr; gap: 1em;'>
-          
-          <div style='padding: 1em; background: #F9F9F9; border-left: 3px solid #0078D4; border-radius: 4px;'>
-            <div style='display: flex; justify-content: space-between; align-items: center;'>
-              <div>
-                <strong style='color: #004578; font-size: 1.05em;'>H1: Cloud transition driving revenue acceleration</strong>
-                <div style='color: #605E5C; font-size: 0.9em; margin-top: 0.3em;'>Growth & Mix tab</div>
-              </div>
-              <span style='background: #107C10; color: white; padding: 0.4em 0.8em; border-radius: 3px; font-size: 0.85em; font-weight: 600;'>✓ SUPPORTED</span>
-            </div>
-            <div style='margin-top: 0.8em; color: #323130; font-size: 0.95em; line-height: 1.5;'>
-              Revenue CAGR accelerated by <strong>%.1fpp</strong> (%.1f%% → %.1f%%) as Intelligent Cloud expanded <strong>%.1fpp</strong> to %.1f%% of revenue.
-            </div>
-          </div>
-          
-          <div style='padding: 1em; background: #F9F9F9; border-left: 3px solid #0078D4; border-radius: 4px;'>
-            <div style='display: flex; justify-content: space-between; align-items: center;'>
-              <div>
-                <strong style='color: #004578; font-size: 1.05em;'>H2: Margin expansion driven by mix shift</strong>
-                <div style='color: #605E5C; font-size: 0.9em; margin-top: 0.3em;'>Profitability Drivers tab</div>
-              </div>
-              <span style='background: #107C10; color: white; padding: 0.4em 0.8em; border-radius: 3px; font-size: 0.85em; font-weight: 600;'>✓ SUPPORTED</span>
-            </div>
-            <div style='margin-top: 0.8em; color: #323130; font-size: 0.95em; line-height: 1.5;'>
-              Operating margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%) while R&D intensity remained stable.
-            </div>
-          </div>
-          
-          <div style='padding: 1em; background: #F9F9F9; border-left: 3px solid #0078D4; border-radius: 4px;'>
-            <div style='display: flex; justify-content: space-between; align-items: center;'>
-              <div>
-                <strong style='color: #004578; font-size: 1.05em;'>H3: Cash generation resilient despite growth investments</strong>
-                <div style='color: #605E5C; font-size: 0.9em; margin-top: 0.3em;'>Cash Engine tab</div>
-              </div>
-              <span style='background: #107C10; color: white; padding: 0.4em 0.8em; border-radius: 3px; font-size: 0.85em; font-weight: 600;'>✓ SUPPORTED</span>
-            </div>
-            <div style='margin-top: 0.8em; color: #323130; font-size: 0.95em; line-height: 1.5;'>
-              FCF margin averaged <strong>%.1f%%</strong> across FY2016-2023.
-            </div>
-          </div>
-          
-          <div style='padding: 1em; background: #F9F9F9; border-left: 3px solid #0078D4; border-radius: 4px;'>
-            <div style='display: flex; justify-content: space-between; align-items: center;'>
-              <div>
-                <strong style='color: #004578; font-size: 1.05em;'>H4: Capital efficiency improved (asset-light model)</strong>
-                <div style='color: #605E5C; font-size: 0.9em; margin-top: 0.3em;'>Balance Sheet tab</div>
-              </div>
-              <span style='background: #107C10; color: white; padding: 0.4em 0.8em; border-radius: 3px; font-size: 0.85em; font-weight: 600;'>✓ SUPPORTED</span>
-            </div>
-            <div style='margin-top: 0.8em; color: #323130; font-size: 0.95em; line-height: 1.5;'>
-              Revenue per dollar of assets increased <strong>%.1f%%</strong>.
-            </div>
-          </div>
-          
-          <div style='padding: 1em; background: #F9F9F9; border-left: 3px solid #0078D4; border-radius: 4px;'>
-            <div style='display: flex; justify-content: space-between; align-items: center;'>
-              <div>
-                <strong style='color: #004578; font-size: 1.05em;'>H5: Balance sheet provides flexibility for capital returns</strong>
-                <div style='color: #605E5C; font-size: 0.9em; margin-top: 0.3em;'>Balance Sheet tab</div>
-              </div>
-              <span style='background: #107C10; color: white; padding: 0.4em 0.8em; border-radius: 3px; font-size: 0.85em; font-weight: 600;'>✓ SUPPORTED</span>
-            </div>
-            <div style='margin-top: 0.8em; color: #323130; font-size: 0.95em; line-height: 1.5;'>
-              Strong cash position ($%.1fB) and moderate leverage support flexibility.
-            </div>
-          </div>
-          
-        </div>
-        ",
-        growth_acceleration, cagr_early_pct, cagr_late_pct, cloud_growth, cloud_2023 * 100,
-        margin_expansion, fy2016$operating_margin * 100, fy2023$operating_margin * 100,
-        avg_fcf_margin,
-        asset_efficiency_change,
-        fy2023$cash / 1e9
-      ))
+      # H4 metrics
+      rev_per_asset_change <- ((fy2023$revenue_per_asset / fy2016$revenue_per_asset) - 1) * 100
+      
+      # H5 metrics
+      cash_2023 <- fy2023$cash / 1e9
+      
+      tagList(
+        # H1
+        div(
+          style = "margin-bottom: 1.5em; padding-left: 1em; border-left: 3px solid #0078D4;",
+          div(
+            style = "display: flex; justify-content: space-between; align-items: center;",
+            div(
+              style = "flex: 1;",
+              h4("H1: Cloud transition driving revenue acceleration", 
+                 style = "color: #004578; margin-bottom: 0.5em;"),
+              div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Growth & Mix tab")
+            ),
+            div(
+              style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
+              "✓ SUPPORTED"
+            )
+          ),
+          p(
+            style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
+            HTML(sprintf("Revenue CAGR accelerated by <strong>%.1fpp</strong> (%.1f%% → %.1f%%) as Intelligent Cloud expanded <strong>%.1fpp</strong> to 41.7%% of revenue.",
+                         cagr_acceleration, cagr_early_pct, cagr_late_pct, cloud_change))
+          )
+        ),
+        
+        # H2
+        div(
+          style = "margin-bottom: 1.5em; padding-left: 1em; border-left: 3px solid #0078D4;",
+          div(
+            style = "display: flex; justify-content: space-between; align-items: center;",
+            div(
+              style = "flex: 1;",
+              h4("H2: Margin expansion driven by mix shift", 
+                 style = "color: #004578; margin-bottom: 0.5em;"),
+              div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Profitability Drivers tab")
+            ),
+            div(
+              style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
+              "✓ SUPPORTED"
+            )
+          ),
+          p(
+            style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
+            HTML(sprintf("Operating margin expanded <strong>%.1fpp</strong> (28.6%% → 41.8%%) while R&D intensity remained stable at ~<strong>%.1f%%</strong>.",
+                         op_margin_expansion, avg_rnd))
+          )
+        ),
+        
+        # H3
+        div(
+          style = "margin-bottom: 1.5em; padding-left: 1em; border-left: 3px solid #0078D4;",
+          div(
+            style = "display: flex; justify-content: space-between; align-items: center;",
+            div(
+              style = "flex: 1;",
+              h4("H3: Cash generation resilient despite growth investments", 
+                 style = "color: #004578; margin-bottom: 0.5em;"),
+              div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Cash Engine tab")
+            ),
+            div(
+              style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
+              "✓ SUPPORTED"
+            )
+          ),
+          p(
+            style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
+            HTML(sprintf("FCF margin averaged <strong>%.1f%%</strong> across FY2016-2023.",
+                         avg_fcf_margin))
+          )
+        ),
+        
+        # H4
+        div(
+          style = "margin-bottom: 1.5em; padding-left: 1em; border-left: 3px solid #0078D4;",
+          div(
+            style = "display: flex; justify-content: space-between; align-items: center;",
+            div(
+              style = "flex: 1;",
+              h4("H4: Capital efficiency improved (asset-light model)", 
+                 style = "color: #004578; margin-bottom: 0.5em;"),
+              div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Balance Sheet tab")
+            ),
+            div(
+              style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
+              "✓ SUPPORTED"
+            )
+          ),
+          p(
+            style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
+            HTML(sprintf("Revenue per dollar of assets increased <strong>%.1f%%</strong>.",
+                         rev_per_asset_change))
+          )
+        ),
+        
+        # H5
+        div(
+          style = "margin-bottom: 0; padding-left: 1em; border-left: 3px solid #0078D4;",
+          div(
+            style = "display: flex; justify-content: space-between; align-items: center;",
+            div(
+              style = "flex: 1;",
+              h4("H5: Balance sheet provides flexibility for capital returns", 
+                 style = "color: #004578; margin-bottom: 0.5em;"),
+              div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Balance Sheet tab")
+            ),
+            div(
+              style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
+              "✓ SUPPORTED"
+            )
+          ),
+          p(
+            style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
+            HTML(sprintf("Strong cash position ($<strong>%.1fB</strong>) and moderate leverage support flexibility.",
+                         cash_2023))
+          )
+        )
+      )
     })
-    
     
     # --- Key Insights ---
     
@@ -387,5 +435,3 @@ mod_executive_brief_server <- function(id, financials, app_metrics) {
     
   })
 }
-
-

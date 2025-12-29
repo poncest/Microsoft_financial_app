@@ -39,6 +39,15 @@ ui <- semanticPage(
   shinyjs::useShinyjs(),
   waiter::use_waiter(),
   
+  # *** NEW: Loading Spinner Configuration ***
+  waiter::waiter_show_on_load(
+    html = tagList(
+      waiter::spin_fading_circles(),
+      h3("Loading Dashboard...", style = "color: #0078D4; margin-top: 1em;")
+    ),
+    color = "#F3F2F1"
+  ),
+  
   # About Modal
   div(
     class = "ui modal about",
@@ -221,10 +230,10 @@ ui <- semanticPage(
           icon("linkedin"), " LinkedIn"
         ),
         tags$a(
-          href = "https://www.stevenponce.com",
+          href = "https://stevenponce.netlify.app/",
           target = "_blank",
           style = "color: #B0B0B0; text-decoration: none; font-size: 1.1em;",
-          icon("globe"), " Portfolio"
+          icon("briefcase"), " Portfolio"
         )
       )
     )
@@ -236,7 +245,7 @@ ui <- semanticPage(
 # ==============================================================================
 server <- function(input, output, session) {
   
-  # Loading spinner
+  # *** NEW: Hide loading spinner once app is ready ***
   waiter::waiter_hide()
   
   # Reactive value for current tab
@@ -256,7 +265,7 @@ server <- function(input, output, session) {
         class = if (current_tab() == "growth") "active item" else "item",
         style = "cursor: pointer;",
         onclick = "Shiny.setInputValue('selected_tab', 'growth');",
-        icon("chart-line"),
+        icon("area graph"), # not rendering
         " Growth & Mix"
       ),
       div(
@@ -270,14 +279,14 @@ server <- function(input, output, session) {
         class = if (current_tab() == "cash") "active item" else "item",
         style = "cursor: pointer;",
         onclick = "Shiny.setInputValue('selected_tab', 'cash');",
-        icon("money-bill-wave"),
+        icon("coins"),
         " Cash Engine"
       ),
       div(
         class = if (current_tab() == "balance_sheet") "active item" else "item",
         style = "cursor: pointer;",
         onclick = "Shiny.setInputValue('selected_tab', 'balance_sheet');",
-        icon("scale-balanced"),
+        icon("clipboard"),   
         " Balance Sheet"
       ),
       div(
@@ -310,7 +319,8 @@ server <- function(input, output, session) {
   })
   
   # Module servers
-  mod_executive_brief_server("executive_brief", financials, app_metrics)
+  # *** UPDATED: Added segments data to executive brief call ***
+  mod_executive_brief_server("executive_brief", financials, segments, app_metrics)
   mod_growth_mix_server("growth_mix", financials, segments, app_metrics)
   mod_profitability_server("profitability", financials)
   mod_cash_engine_server("cash_engine", financials)

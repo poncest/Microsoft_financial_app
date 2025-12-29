@@ -45,6 +45,28 @@ mod_profitability_ui <- function(id) {
         "Key Findings"
       ),
       uiOutput(ns("profitability_insight"))
+    ),
+    
+    # H2 Hypothesis Callout (STANDARDIZED FORMAT)
+    div(
+      style = "margin-top: 1.5em; padding-left: 1em; border-left: 3px solid #0078D4;",
+      div(
+        style = "display: flex; justify-content: space-between; align-items: center;",
+        div(
+          style = "flex: 1;",
+          h4("Hypothesis H2: Margin expansion driven by mix shift, not cost compression", 
+             style = "color: #004578; margin-bottom: 0.5em;"),
+          div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Profitability Drivers tab")
+        ),
+        div(
+          style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
+          "✓ SUPPORTED"
+        )
+      ),
+      p(
+        style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
+        uiOutput(ns("hypothesis_h2"), inline = TRUE)
+      )
     )
   )
 }
@@ -66,7 +88,7 @@ mod_profitability_server <- function(id, financials) {
       chart_rnd_intensity(financials)
     })
     
-    # --- Insights with H2 Hypothesis ---
+    # --- Key Findings (bullets only) ---
     
     output$profitability_insight <- renderUI({
       
@@ -82,24 +104,29 @@ mod_profitability_server <- function(id, financials) {
           <li>Gross margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%)</li>
           <li>Operating margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%)</li>
           <li>R&D intensity remained stable at ~<strong>%.1f%%</strong> throughout the period</li>
-        </ul>
-        <div style='margin-top: 1.5em; padding: 1.2em; background: #E1F5FE; border-radius: 4px; border-left: 3px solid #0078D4;'>
-          <div style='color: #004578; font-weight: 600; margin-bottom: 0.8em;'>
-            Hypothesis H2: Margin expansion driven by mix shift, not cost compression
-          </div>
-          <div style='color: #323130; line-height: 1.6;'>
-            <strong style='color: #107C10;'>✓ SUPPORTED:</strong> 
-            Operating margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%) while R&D intensity remained stable at <strong>~%.1f%%</strong>, 
-            indicating profitability gains came from revenue mix (cloud services) rather than cost reduction.
-          </div>
-        </div>",
+        </ul>",
         gross_expansion,
         fy2016$gross_margin * 100,
         fy2023$gross_margin * 100,
         op_expansion,
         fy2016$operating_margin * 100,
         fy2023$operating_margin * 100,
-        avg_rnd,
+        avg_rnd
+      ))
+    })
+    
+    # --- Hypothesis Evidence ---
+    
+    output$hypothesis_h2 <- renderUI({
+      
+      fy2016 <- financials |> filter(fiscal_year == 2016)
+      fy2023 <- financials |> filter(fiscal_year == 2023)
+      
+      op_expansion <- (fy2023$operating_margin - fy2016$operating_margin) * 100
+      avg_rnd <- mean(financials$rnd_intensity, na.rm = TRUE) * 100
+      
+      HTML(sprintf(
+        "Operating margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%) while R&D intensity remained stable at ~<strong>%.1f%%</strong>, indicating profitability gains came from revenue mix (cloud services) rather than cost reduction.",
         op_expansion,
         fy2016$operating_margin * 100,
         fy2023$operating_margin * 100,
