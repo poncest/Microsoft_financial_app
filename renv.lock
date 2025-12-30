@@ -9,6 +9,17 @@
     ]
   },
   "Packages": {
+    "PKI": {
+      "Package": "PKI",
+      "Version": "0.1-15",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "base64enc"
+      ],
+      "Hash": "ec0620ffbe13af5d017a92077085965e"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.6.1",
@@ -39,6 +50,17 @@
         "utils"
       ],
       "Hash": "0d3d8867aa41b0d9ad113b50c169ecb2"
+    },
+    "RcppTOML": {
+      "Package": "RcppTOML",
+      "Version": "0.2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "23eeca7d3c7d63fc7449108c0a66178c"
     },
     "S7": {
       "Package": "S7",
@@ -143,6 +165,16 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "8cba62334c1088d21689d353a7e87663"
+    },
+    "cpp11": {
+      "Package": "cpp11",
+      "Version": "0.5.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "2720e3fd3dad08f34b19b56b3d6f073d"
     },
     "curl": {
       "Package": "curl",
@@ -255,6 +287,22 @@
         "fontLiberation"
       ],
       "Hash": "fc0f4226379e451057d55419fd31761e"
+    },
+    "forcats": {
+      "Package": "forcats",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cli",
+        "glue",
+        "lifecycle",
+        "magrittr",
+        "rlang",
+        "tibble"
+      ],
+      "Hash": "f884a14605c6a9eb01db676eee793ba7"
     },
     "fs": {
       "Package": "fs",
@@ -467,6 +515,17 @@
       ],
       "Hash": "0f9a864bbd7ce0232ad05cb76249cc1a"
     },
+    "jose": {
+      "Package": "jose",
+      "Version": "1.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "jsonlite",
+        "openssl"
+      ],
+      "Hash": "cf5ae308441d505b8c7e4b08e0e510aa"
+    },
     "jquerylib": {
       "Package": "jquerylib",
       "Version": "0.1.4",
@@ -601,6 +660,18 @@
         "R"
       ],
       "Hash": "627d6993db1043703c0b084fa432f21f"
+    },
+    "packrat": {
+      "Package": "packrat",
+      "Version": "0.9.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "tools",
+        "utils"
+      ],
+      "Hash": "d3289899c84c65def1a783ea0a9ea0eb"
     },
     "pak": {
       "Package": "pak",
@@ -761,6 +832,38 @@
       ],
       "Hash": "b2453de2d29aa646afe4781defdc7903"
     },
+    "rsconnect": {
+      "Package": "rsconnect",
+      "Version": "1.7.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "PKI",
+        "R",
+        "cli",
+        "curl",
+        "digest",
+        "jsonlite",
+        "lifecycle",
+        "openssl",
+        "packrat",
+        "renv",
+        "rlang",
+        "rstudioapi",
+        "snowflakeauth",
+        "tools",
+        "utils",
+        "yaml"
+      ],
+      "Hash": "bb44049707584498dc7fdae0963aa8a6"
+    },
+    "rstudioapi": {
+      "Package": "rstudioapi",
+      "Version": "0.17.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5f90cd73946d706cfe26024294236113"
+    },
     "sass": {
       "Package": "sass",
       "Version": "0.4.10",
@@ -872,6 +975,35 @@
         "stats"
       ],
       "Hash": "7ba90374cf8d858e273e601b79473c16"
+    },
+    "shinyjs": {
+      "Package": "shinyjs",
+      "Version": "2.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "jsonlite",
+        "shiny"
+      ],
+      "Hash": "802e4786b353a4bb27116957558548d5"
+    },
+    "snowflakeauth": {
+      "Package": "snowflakeauth",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "RcppTOML",
+        "cli",
+        "curl",
+        "jose",
+        "jsonlite",
+        "openssl",
+        "rlang"
+      ],
+      "Hash": "cc966d509015e3eeaf0a09ab9b4b535c"
     },
     "sourcetools": {
       "Package": "sourcetools",
@@ -1049,6 +1181,18 @@
         "R"
       ],
       "Hash": "c826c7c4241b6fc89ff55aaea3fa7491"
+    },
+    "waiter": {
+      "Package": "waiter",
+      "Version": "0.2.5.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R6",
+        "htmltools",
+        "shiny"
+      ],
+      "Hash": "695c6fadef72d88e1ea024a5a74571bb"
     },
     "withr": {
       "Package": "withr",

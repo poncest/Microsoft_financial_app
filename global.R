@@ -26,6 +26,7 @@ suppressPackageStartupMessages({
   # Utilities
   library(forcats)
   library(here)
+  library(cpp11)
 })
 
 # ==============================================================================

@@ -18,7 +18,7 @@ This project is **not** an official Microsoft product and is not affiliated with
 ## Live Dashboard
 
 🔗 **Interactive dashboard (ShinyApps.io):**\
-<https://><your-shinyapps-link>
+<https://0l6jpd-steven-ponce.shinyapps.io/Microsoft_financial_app/>
 
 ------------------------------------------------------------------------
 

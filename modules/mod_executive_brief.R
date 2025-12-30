@@ -28,7 +28,7 @@ mod_executive_brief_ui <- function(id) {
           class = "content",
           style = "text-align: center; padding: 2em 1em; min-height: 170px; background: white;",
           div(
-            style = "font-size: 2.5em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
+            style = "font-size: 2.3em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
             uiOutput(ns("kpi_revenue"), inline = TRUE)
           ),
           div(
@@ -49,7 +49,7 @@ mod_executive_brief_ui <- function(id) {
           class = "content",
           style = "text-align: center; padding: 2em 1em; min-height: 170px; background: white;",
           div(
-            style = "font-size: 2.5em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
+            style = "font-size: 2.3em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
             uiOutput(ns("kpi_gross_margin"), inline = TRUE)
           ),
           div(
@@ -70,7 +70,7 @@ mod_executive_brief_ui <- function(id) {
           class = "content",
           style = "text-align: center; padding: 2em 1em; min-height: 170px; background: white;",
           div(
-            style = "font-size: 2.5em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
+            style = "font-size: 2.3em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
             uiOutput(ns("kpi_operating_margin"), inline = TRUE)
           ),
           div(
@@ -91,7 +91,7 @@ mod_executive_brief_ui <- function(id) {
           class = "content",
           style = "text-align: center; padding: 2em 1em; min-height: 170px; background: white;",
           div(
-            style = "font-size: 2.5em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
+            style = "font-size: 2.3em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
             uiOutput(ns("kpi_fcf"), inline = TRUE)
           ),
           div(
@@ -112,7 +112,7 @@ mod_executive_brief_ui <- function(id) {
           class = "content",
           style = "text-align: center; padding: 2em 1em; min-height: 170px; background: white;",
           div(
-            style = "font-size: 2.5em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
+            style = "font-size: 2.3em; font-weight: 700; color: #0078D4; margin-bottom: 0.2em;",
             uiOutput(ns("kpi_revenue_growth"), inline = TRUE)
           ),
           div(
