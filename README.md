@@ -179,4 +179,16 @@ Detailed source links and filing references are maintained in `references.md`.
 
 ------------------------------------------------------------------------
 
+## Contact and Links
+
+**Steven Ponce**\
+Data Analyst \| R Shiny Developer \| Business Intelligence Specialist
+
+🔗 **Portfolio Website**: [stevenponce.netlify.app](https://stevenponce.netlify.app/projects.html)\
+🐙 **GitHub**: [\@poncest](https://github.com/poncest)\
+💼 **LinkedIn**: [stevenponce](https://www.linkedin.com/in/stevenponce/)\
+🐦 **X (Twitter)**: [\@sponce1](https://x.com/sponce1)
+
+------------------------------------------------------------------------
+
 Prepared by Steven Ponce as part of a professional analytics portfolio.
