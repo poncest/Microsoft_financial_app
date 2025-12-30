@@ -60,47 +60,57 @@ ui <- semanticPage(
     div(
       class = "content",
       
+      
       tags$h3("Purpose"),
       tags$p(
-        "Strategic financial analysis of Microsoft Corporation demonstrating data engineering from official SEC sources and hypothesis-driven analytics for portfolio presentation."
+        "This dashboard presents an independent financial analysis of Microsoft Corporation, designed to demonstrate data engineering from official SEC disclosures and hypothesis-driven financial analysis for portfolio and demonstration purposes. ",
+        "The focus is on translating historical financial data into executive-relevant insights while maintaining clear boundaries around scope, assumptions, and interpretation."
       ),
       
       tags$h3("Data Sources"),
       tags$ul(
-        tags$li(tags$strong("Primary:"), " SEC EDGAR XBRL Company Facts API"),
+        tags$li(tags$strong("Primary source:"), " SEC EDGAR XBRL Company Facts API"),
         tags$li(tags$strong("Company:"), " Microsoft Corporation (CIK 0000789019)"),
-        tags$li(tags$strong("Filings:"), " Annual 10-K reports (FY2016–FY2023)"),
-        tags$li(tags$strong("Segments:"), " Extracted from Item 1 - Business disclosures")
+        tags$li(tags$strong("Filings:"), " Annual Form 10-K reports (FY2016–FY2023)"),
+        tags$li(tags$strong("Segment information:"), " Extracted from Item 1 (Business) disclosures where available")
       ),
       
       tags$h3("How to Use"),
       tags$ul(
-        tags$li(tags$strong("Executive Brief:"), " High-level KPIs and financial trends for quick assessment"),
-        tags$li(tags$strong("Growth & Mix:"), " Revenue acceleration analysis and segment composition shifts"),
-        tags$li(tags$strong("Profitability Drivers:"), " Margin expansion and R&D intensity analysis"),
-        tags$li(tags$strong("Cash Engine:"), " Operating cash flow and free cash flow generation"),
-        tags$li(tags$strong("Balance Sheet:"), " Capital efficiency and balance sheet strength metrics"),
-        tags$li(tags$strong("Data Explorer:"), " Full dataset with filters and CSV export")
+        tags$li(tags$strong("Executive Brief:"), " High-level KPIs and directional financial trends for rapid assessment"),
+        tags$li(tags$strong("Growth & Mix:"), " Revenue trends and changes in reported business composition"),
+        tags$li(tags$strong("Profitability Drivers:"), " Margin evolution and R&D intensity in historical context"),
+        tags$li(tags$strong("Cash Engine:"), " Operating cash flow and Free Cash Flow (proxy) generation"),
+        tags$li(tags$strong("Balance Sheet:"), " Capital efficiency and indicators of financial flexibility"),
+        tags$li(tags$strong("Data Explorer:"), " Full dataset with filters and CSV export for transparency")
       ),
       
-      tags$h3("Hypotheses Tested"),
+      tags$h3("Analytical Hypotheses"),
+      tags$p("The dashboard evaluates the following exploratory hypotheses using historical, consolidated disclosures:"),
       tags$ul(
-        tags$li(tags$strong("H1:"), " Revenue growth accelerated (cloud transition effect)"),
-        tags$li(tags$strong("H2:"), " Margin expansion driven by mix shift, not cost compression"),
-        tags$li(tags$strong("H3:"), " Cash generation remains resilient despite growth investments"),
-        tags$li(tags$strong("H4:"), " Capital efficiency improved (asset-light model)"),
-        tags$li(tags$strong("H5:"), " Balance sheet provides flexibility for capital returns")
+        tags$li(tags$strong("H1:"), " Revenue growth increased in later years, coinciding with shifts in business mix"),
+        tags$li(tags$strong("H2:"), " Margin expansion aligns more closely with mix effects than broad-based cost compression"),
+        tags$li(tags$strong("H3:"), " Cash generation remained resilient alongside growth investments"),
+        tags$li(tags$strong("H4:"), " Capital efficiency improved over the analysis period"),
+        tags$li(tags$strong("H5:"), " Balance sheet strength indicates financial flexibility")
       ),
+      tags$p("Hypotheses are assessed descriptively and do not imply causal attribution."),
       
       tags$h3("Disclaimer"),
-      tags$p(tags$strong("This is a portfolio project."), " Figures are simplified and re-aggregated from SEC filings for analytical purposes. This dashboard does not constitute investment advice, financial forecasts, or official company reporting."),
+      tags$p(
+        "This dashboard is an independent portfolio project. ",
+        "Figures are simplified and re-aggregated from publicly available SEC filings for analytical clarity. ",
+        "This work does not constitute investment advice, financial forecasts, valuation guidance, or official company reporting, ",
+        "and is not affiliated with or endorsed by Microsoft Corporation."
+      ),
       
       tags$h3("Technology Stack"),
       tags$p(
-        tags$strong("Built with:"), " R Shiny, Appsilon stack (shiny.semantic, ggiraph, reactable), SEC EDGAR API"
+        tags$strong("Built with:"),
+        " R Shiny using a modular Appsilon-style architecture, including ggplot2, ggiraph, reactable, and the SEC EDGAR API."
       ),
       
-      # Links
+      
       div(
         style = "margin-top: 2em; display: flex; gap: 1em; flex-wrap: wrap;",
         tags$a(
@@ -265,7 +275,7 @@ server <- function(input, output, session) {
         class = if (current_tab() == "growth") "active item" else "item",
         style = "cursor: pointer;",
         onclick = "Shiny.setInputValue('selected_tab', 'growth');",
-        icon("area graph"), # not rendering
+        icon("area graph"), 
         " Growth & Mix"
       ),
       div(

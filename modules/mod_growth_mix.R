@@ -57,13 +57,13 @@ mod_growth_mix_ui <- function(id) {
         style = "display: flex; justify-content: space-between; align-items: center;",
         div(
           style = "flex: 1;",
-          h4("Hypothesis H1: Cloud transition driving revenue acceleration", 
+          h4("Hypothesis H1: Revenue acceleration coincides with increased cloud mix",
              style = "color: #004578; margin-bottom: 0.5em;"),
           div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Growth & Mix tab")
         ),
         div(
           style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-          "✓ SUPPORTED"
+          "Directionally supported"
         )
       ),
       p(

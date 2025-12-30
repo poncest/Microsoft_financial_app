@@ -15,6 +15,13 @@ This project is **not** an official Microsoft product and is not affiliated with
 
 ------------------------------------------------------------------------
 
+## Live Dashboard
+
+🔗 **Interactive dashboard (ShinyApps.io):**\
+<https://><your-shinyapps-link>
+
+------------------------------------------------------------------------
+
 ## Executive Questions Addressed
 
 ## Dashboard Preview
@@ -40,7 +47,7 @@ The dashboard is structured around leadership-level questions commonly faced by 
 -   Where has revenue growth originated over time, and how has the business mix evolved?
 -   How have profitability and cash generation changed across business cycles?
 -   What does the balance sheet reveal about financial flexibility?
--   Which observed trends are robust, and which require caution due to aggregation limits?
+-   Which observed trends are stable, and which require caution due to aggregation limits?
 
 Each section of the dashboard aligns to one or more of these questions.
 

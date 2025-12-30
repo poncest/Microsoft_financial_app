@@ -201,7 +201,7 @@ mod_cash_engine_server <- function(id, financials) {
       avg_fcf_margin <- mean(financials$fcf_margin, na.rm = TRUE) * 100
       
       HTML(sprintf(
-        "FCF margin averaged <strong>%.1f%%</strong> across FY2016-2023, consistently exceeding 30%% threshold despite significant R&D and capital investments.",
+        "FCF margin averaged <strong>%.1f%%</strong> across FY2016-2023, consistently exceeding 30%% threshold while the company continued to invest in R&D and capital expenditures.",
         avg_fcf_margin
       ))
     })

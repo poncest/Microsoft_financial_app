@@ -47,7 +47,7 @@ mod_profitability_ui <- function(id) {
       uiOutput(ns("profitability_insight"))
     ),
     
-    # H2 Hypothesis Callout (STANDARDIZED FORMAT)
+    # H2 Hypothesis Callout 
     div(
       style = "margin-top: 1.5em; padding-left: 1em; border-left: 3px solid #0078D4;",
       div(
