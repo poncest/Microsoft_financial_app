@@ -23,15 +23,15 @@ Below are selected views from the dashboard illustrating the analytical structur
 
 ### Executive Brief
 
-![Executive Brief – Key financial indicators and directional insights](screenshots/exec_brief.png){alt="Executive Brief – Key financial indicators and directional insights"}
+![Executive Brief – Key financial indicators and directional insights](screenshots/exec_brief.png)
 
 ### Growth & Mix
 
-![Growth and Mix – Revenue trends and growth comparisons](screenshots/growth_mix.png){alt="Growth and Mix – Revenue trends and growth comparisons"}
+![Growth and Mix – Revenue trends and growth comparisons](screenshots/growth_mix.png)
 
 ### Profitability Drivers
 
-![Profitability Drivers – Margin evolution and cost structure context](screenshots/profitability.png){alt="Profitability Drivers – Margin evolution and cost structure context"}
+![Profitability Drivers – Margin evolution and cost structure context](screenshots/profitability.png)
 
 *Additional tabs (Cash Engine, Balance Sheet & Capital, Data Explorer) extend this analysis and emphasize transparency and defensibility.*
 
