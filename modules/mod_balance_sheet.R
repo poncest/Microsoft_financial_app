@@ -12,7 +12,7 @@ mod_balance_sheet_ui <- function(id) {
     
     # Header
     h2("Balance Sheet & Capital", style = "color: #004578;"),
-    p("Asset efficiency and balance sheet composition", 
+    p("Asset efficiency and balance sheet composition based on reported financials", 
       style = "color: #605E5C; margin-bottom: 2em;"),
     
     # KPI Cards (MATCHES Executive Brief format)
@@ -89,7 +89,7 @@ mod_balance_sheet_ui <- function(id) {
       class = "ui segment",
       style = "margin-top: 2em; padding: 2em;",
       h3("Revenue per Dollar of Assets", style = "color: #004578;"),
-      p("Tests H4: Improving capital efficiency (asset-light model)", 
+      p("Evaluates H4: Changes in capital efficiency over time", 
         style = "color: #605E5C; font-size: 0.9em;"),
       girafeOutput(ns("chart_revenue_per_asset"), height = "350px")
     ),
@@ -117,13 +117,13 @@ mod_balance_sheet_ui <- function(id) {
         style = "display: flex; justify-content: space-between; align-items: center;",
         div(
           style = "flex: 1;",
-          h4("Hypothesis H4: Capital efficiency improved (asset-light model)", 
+          h4("Hypothesis H4: Capital efficiency improved over the period", 
              style = "color: #004578; margin-bottom: 0.5em;"),
           div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Balance Sheet tab")
         ),
         div(
           style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-          "✓ SUPPORTED"
+          "✓ Supported"
         )
       ),
       p(
@@ -139,20 +139,27 @@ mod_balance_sheet_ui <- function(id) {
         style = "display: flex; justify-content: space-between; align-items: center;",
         div(
           style = "flex: 1;",
-          h4("Hypothesis H5: Balance sheet provides flexibility for capital returns", 
+          h4("Hypothesis H5: Balance sheet strength provides capital flexibility", 
              style = "color: #004578; margin-bottom: 0.5em;"),
           div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Balance Sheet tab")
         ),
         div(
           style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-          "✓ SUPPORTED"
+          "Supported (descriptive)"
         )
       ),
       p(
         style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
         uiOutput(ns("hypothesis_h5"), inline = TRUE)
       )
+    ),
+    
+    div(
+      style = "margin-top: 1.2em; font-size: 0.85em; color: #605E5C; font-style: italic;",
+      "Balance sheet analysis is based on consolidated historical disclosures. ",
+      "Results are descriptive and do not assess management intent, capital allocation priorities, or future leverage decisions."
     )
+    
   )
 }
 
@@ -216,9 +223,9 @@ mod_balance_sheet_server <- function(id, financials) {
       HTML(sprintf(
         "<ul style='line-height: 1.8; color: #323130;'>
           <li>Revenue per dollar of assets increased <strong>%.1f%%</strong> from FY2016 to FY2023</li>
-          <li>Improved from <strong>$%.2f</strong> to <strong>$%.2f</strong> (supports H4: capital efficiency)</li>
+          <li>Improved from <strong>$%.2f</strong> to <strong>$%.2f</strong> (is consistent with improved capital efficiency (H4))</li>
           <li>Cash represents <strong>%.1f%%</strong> of total assets in FY2023</li>
-          <li>Strong balance sheet provides flexibility for capital returns and strategic investments (supports H5)</li>
+          <li>Balance sheet strength indicates capacity for capital flexibility (H5), without assessing future allocation decisions</li>
         </ul>",
         rpa_change,
         fy2016$revenue_per_asset,
@@ -237,7 +244,7 @@ mod_balance_sheet_server <- function(id, financials) {
       rpa_change <- ((fy2023$revenue_per_asset / fy2016$revenue_per_asset) - 1) * 100
       
       HTML(sprintf(
-        "Revenue per dollar of assets increased <strong>%.1f%%</strong> ($%.2f → $%.2f), demonstrating improved capital efficiency and asset-light business model.",
+        "Revenue per dollar of assets increased <strong>%.1f%%</strong> ($%.2f → $%.2f), indicating improved capital efficiency over the period. This does not isolate underlying drivers.",
         rpa_change,
         fy2016$revenue_per_asset,
         fy2023$revenue_per_asset
@@ -254,7 +261,7 @@ mod_balance_sheet_server <- function(id, financials) {
       debt_to_equity <- fy2023$debt_to_equity
       
       HTML(sprintf(
-        "Strong cash position ($<strong>%.1fB</strong>) and moderate debt-to-equity ratio (<strong>%.2f</strong>) provide financial flexibility for capital returns and strategic investments.",
+        "Strong cash position ($<strong>%.1fB</strong>) and moderate debt-to-equity ratio (<strong>%.2f</strong>) indicate financial flexibility at the end of the period, without implying future capital allocation outcomes.",
         cash_b,
         debt_to_equity
       ))

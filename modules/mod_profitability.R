@@ -12,7 +12,7 @@ mod_profitability_ui <- function(id) {
     
     # Header
     h2("Profitability Drivers", style = "color: #004578; margin-bottom: 0.3em;"),
-    p("Margin evolution and cost structure analysis", 
+    p("Margin evolution and cost structure, based on consolidated financials", 
       style = "color: #605E5C; margin-bottom: 2em;"),
     
     # Margin Trends (Multi-Line)
@@ -20,7 +20,7 @@ mod_profitability_ui <- function(id) {
       class = "ui segment",
       style = "margin-top: 1.5em; padding: 2em; background: white;",
       h4("Margin Trends (FY2016-2023)", style = "color: #004578; margin-bottom: 0.5em;"),
-      p("All three margins expanding suggests mix shift, not just cost control", 
+      p("Concurrent expansion in multiple margins is consistent with favorable revenue mix, not solely cost control", 
         style = "color: #605E5C; font-size: 0.9em;"),
       girafeOutput(ns("chart_margin_trends"), height = "320px")
     ),
@@ -30,7 +30,7 @@ mod_profitability_ui <- function(id) {
       class = "ui segment",
       style = "margin-top: 1.5em; padding: 2em; background: white;",
       h4("R&D Intensity (R&D / Revenue)", style = "color: #004578; margin-bottom: 0.5em;"),
-      p("Stable R&D spending despite margin expansion", 
+      p("R&D intensity remained broadly stable during margin expansion", 
         style = "color: #605E5C; font-size: 0.9em;"),
       girafeOutput(ns("chart_rnd_intensity"), height = "320px")
     ),
@@ -54,19 +54,26 @@ mod_profitability_ui <- function(id) {
         style = "display: flex; justify-content: space-between; align-items: center;",
         div(
           style = "flex: 1;",
-          h4("Hypothesis H2: Margin expansion driven by mix shift, not cost compression", 
+          h4("Hypothesis H2: Margin expansion reflects revenue mix shifts more than cost compression", 
              style = "color: #004578; margin-bottom: 0.5em;"),
           div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Profitability Drivers tab")
         ),
         div(
           style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-          "✓ SUPPORTED"
+          "Partially supported"
         )
       ),
       p(
         style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
         uiOutput(ns("hypothesis_h2"), inline = TRUE)
+      ),
+      
+      div(
+        style = "margin-top: 1.2em; font-size: 0.85em; color: #605E5C; font-style: italic;",
+        "Analysis is based on consolidated historical financial disclosures. ",
+        "Attribution between mix effects and cost structure cannot be isolated without segment-level margin data."
       )
+      
     )
   )
 }
@@ -126,7 +133,7 @@ mod_profitability_server <- function(id, financials) {
       avg_rnd <- mean(financials$rnd_intensity, na.rm = TRUE) * 100
       
       HTML(sprintf(
-        "Operating margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%) while R&D intensity remained stable at ~<strong>%.1f%%</strong>, indicating profitability gains came from revenue mix (cloud services) rather than cost reduction.",
+        "Operating margin expanded <strong>%.1fpp</strong> (%.1f%% → %.1f%%) while R&D intensity remained stable at ~<strong>%.1f%%</strong>, which is consistent with profitability gains driven by revenue mix effects rather than broad-based cost reduction. Segment-level margins are not disclosed.",
         op_expansion,
         fy2016$operating_margin * 100,
         fy2023$operating_margin * 100,

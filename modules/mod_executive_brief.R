@@ -117,7 +117,7 @@ mod_executive_brief_ui <- function(id) {
           ),
           div(
             style = "font-size: 0.9em; color: #323130; margin-bottom: 0.5em; font-weight: 500;",
-            "FY2023 Growth"
+            "FY2023 YoY Growth"
           ),
           div(
             style = "font-size: 0.85em; color: #605E5C; min-height: 20px;",
@@ -171,7 +171,14 @@ mod_executive_brief_ui <- function(id) {
       
       h3("Strategic Hypotheses", style = "color: #004578; margin-bottom: 1em; border-bottom: 2px solid #0078D4; padding-bottom: 0.5em;"),
       
-      uiOutput(ns("all_hypotheses"))
+      uiOutput(ns("all_hypotheses")),
+      
+      div(
+        style = "margin-top: 1.5em; font-size: 0.85em; color: #605E5C; font-style: italic;",
+        "Hypotheses are evaluated using consolidated historical financial disclosures. ",
+        "Results indicate directional alignment with stated hypotheses, not causal attribution."
+      )
+      
     ),
     
     # Key Insights Box
@@ -295,18 +302,18 @@ mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
             style = "display: flex; justify-content: space-between; align-items: center;",
             div(
               style = "flex: 1;",
-              h4("H1: Cloud transition driving revenue acceleration", 
+              h4("H1: Revenue acceleration coincides with increased cloud mix", 
                  style = "color: #004578; margin-bottom: 0.5em;"),
               div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Growth & Mix tab")
             ),
             div(
               style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-              "✓ SUPPORTED"
+              "Directionally supported"
             )
           ),
           p(
             style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
-            HTML(sprintf("Revenue CAGR accelerated by <strong>%.1fpp</strong> (%.1f%% → %.1f%%) as Intelligent Cloud expanded <strong>%.1fpp</strong> to 41.7%% of revenue.",
+            HTML(sprintf("Revenue CAGR accelerated by <strong>%.1fpp</strong> (%.1f%% → %.1f%%) alongside an expansion in Intelligent Cloud <strong>%.1fpp</strong> to 41.7%% of revenue.",
                          cagr_acceleration, cagr_early_pct, cagr_late_pct, cloud_change))
           )
         ),
@@ -318,18 +325,18 @@ mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
             style = "display: flex; justify-content: space-between; align-items: center;",
             div(
               style = "flex: 1;",
-              h4("H2: Margin expansion driven by mix shift", 
+              h4("H2: Margin expansion reflects revenue mix shift", 
                  style = "color: #004578; margin-bottom: 0.5em;"),
               div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Profitability Drivers tab")
             ),
             div(
               style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-              "✓ SUPPORTED"
+              "Partially supported"
             )
           ),
           p(
             style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
-            HTML(sprintf("Operating margin expanded <strong>%.1fpp</strong> (28.6%% → 41.8%%) while R&D intensity remained stable at ~<strong>%.1f%%</strong>.",
+            HTML(sprintf("Operating margin expanded <strong>%.1fpp</strong> (28.6%% → 41.8%%) while R&D intensity remained relatively stable at ~<strong>%.1f%%</strong>.",
                          op_margin_expansion, avg_rnd))
           )
         ),
@@ -347,7 +354,7 @@ mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
             ),
             div(
               style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-              "✓ SUPPORTED"
+              "✓ Supported"
             )
           ),
           p(
@@ -364,13 +371,13 @@ mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
             style = "display: flex; justify-content: space-between; align-items: center;",
             div(
               style = "flex: 1;",
-              h4("H4: Capital efficiency improved (asset-light model)", 
+              h4("H4: Capital efficiency improved over the period", 
                  style = "color: #004578; margin-bottom: 0.5em;"),
               div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Balance Sheet tab")
             ),
             div(
               style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-              "✓ SUPPORTED"
+              "✓ Supported"
             )
           ),
           p(
@@ -387,18 +394,18 @@ mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
             style = "display: flex; justify-content: space-between; align-items: center;",
             div(
               style = "flex: 1;",
-              h4("H5: Balance sheet provides flexibility for capital returns", 
+              h4("H5: Balance sheet strength provides capital flexibility", 
                  style = "color: #004578; margin-bottom: 0.5em;"),
               div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Balance Sheet tab")
             ),
             div(
               style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-              "✓ SUPPORTED"
+              "Supported (descriptive)"
             )
           ),
           p(
             style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
-            HTML(sprintf("Strong cash position ($<strong>%.1fB</strong>) and moderate leverage support flexibility.",
+            HTML(sprintf("Strong cash position ($<strong>%.1fB</strong>) and moderate leverage support financial flexibility, without assessing future allocation decisions.",
                          cash_2023))
           )
         )
@@ -421,7 +428,7 @@ mod_executive_brief_server <- function(id, financials, segments, app_metrics) {
           <li>Revenue grew <strong>%.1f%%</strong> from FY2016 to FY2023 ($%.1fB → $%.1fB)</li>
           <li>Operating margin expanded <strong>%.1f percentage points</strong> (%.1f%% → %.1f%%)</li>
           <li>Free cash flow margin averaged <strong>%.1f%%</strong> across the period</li>
-          <li>Cloud transition driving both growth acceleration and profitability improvement</li>
+          <li>Revenue growth and margin expansion occurred alongside a rising contribution from cloud-related segments</li>
         </ul>",
         revenue_growth_total,
         fy2016$revenue / 1e9,

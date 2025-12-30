@@ -1,5 +1,5 @@
 # Module: Data Explorer
-# Full dataset with export capability and methodology documentation
+# Complete dataset with export capability and transparent methodology
 
 # ==============================================================================
 # UI
@@ -12,7 +12,7 @@ mod_data_explorer_ui <- function(id) {
     
     # Header
     h2("Data Explorer", style = "color: #004578;"),
-    p("Full dataset with export capability and methodology documentation", 
+    p("Complete dataset with export capability and transparent methodology", 
       style = "color: #605E5C; margin-bottom: 2em;"),
     
     # Download Button
@@ -30,18 +30,24 @@ mod_data_explorer_ui <- function(id) {
     div(
       class = "ui segment",
       style = "padding: 2em; background: white;",
-      h3("Financial Summary (FY2016-2023)", style = "color: #004578; margin-bottom: 1em;"),
-      reactableOutput(ns("table_financials"))
+      h3("Financial Summary (FY2016–FY2023, consolidated)", style = "color: #004578; margin-bottom: 1em;"),
+      reactableOutput(ns("table_financials")),
+      
+      p(
+        style = "margin-top: 0.8em; font-size: 0.85em; color: #605E5C; font-style: italic;",
+        "All figures reflect consolidated historical financial disclosures. Minor rounding differences may occur."
+      )
+      
     ),
     
     # Methodology Section
     div(
       class = "ui segment",
       style = "margin-top: 2em; padding: 2em; background: white;",
-      h3("Data Sources & Methodology", style = "color: #004578; margin-bottom: 1em;"),
+      h3("Data Sources, Definitions & Methodology", style = "color: #004578; margin-bottom: 1em;"),
       
       tags$h4("Primary Data Source", style = "color: #323130; margin-top: 1.5em;"),
-      tags$p("SEC EDGAR XBRL Company Facts API", style = "color: #605E5C;"),
+      tags$p("SEC EDGAR XBRL Company Facts API (official SEC-hosted structured data)", style = "color: #605E5C;"),
       tags$ul(
         style = "color: #323130; line-height: 1.6;",
         tags$li("Company: Microsoft Corporation (CIK 0000789019)"),
@@ -50,25 +56,25 @@ mod_data_explorer_ui <- function(id) {
                                             style = "background: #F3F2F1; padding: 2px 6px; border-radius: 3px;"))
       ),
       
-      tags$h4("Key Metrics Derivation", style = "color: #323130; margin-top: 1.5em;"),
+      tags$h4("Key Metrics & Derivations", style = "color: #323130; margin-top: 1.5em;"),
       tags$ul(
         style = "color: #323130; line-height: 1.6;",
         tags$li(tags$strong("Revenue:"), " Consolidated from 'Revenues' (FY2016-2017) and 'RevenueFromContractWithCustomerExcludingAssessedTax' (FY2018-2023) due to accounting standard change (ASC 606)"),
         tags$li(tags$strong("Margins:"), " Calculated as ratios of reported values (e.g., Operating Margin = Operating Income / Revenue)"),
-        tags$li(tags$strong("FCF Proxy:"), " Operating Cash Flow - Capital Expenditures"),
+        tags$li(tags$strong("FCF Proxy:"), " Operating Cash Flow minus Capital Expenditures (simplified proxy)"),
         tags$li(tags$strong("Growth Rates:"), " Year-over-year percentage change"),
         tags$li(tags$strong("Capital Efficiency:"), " Revenue / Total Assets")
       ),
       
       tags$h4("Segment Data", style = "color: #323130; margin-top: 1.5em;"),
-      tags$p("Segment revenue extracted from 10-K Item 1 - Business, Segment Information disclosures. Revenue-only (no segment margin estimation).", 
+      tags$p("Segment revenue extracted from 10-K segment disclosures. Revenue-only; segment margins are not estimated or inferred.", 
              style = "color: #605E5C;"),
       
       tags$h4("Disclaimers", style = "color: #323130; margin-top: 1.5em;"),
       tags$p(
         style = "color: #605E5C; line-height: 1.6;",
-        tags$strong("This dashboard is an independent analytical exercise."), 
-        " Figures are simplified and re-aggregated for illustrative purposes only and do not represent official company reporting, forecasts, or investment advice."
+        tags$strong("This dashboard is an independent analytical exercise created for portfolio and demonstration purposes."), 
+        " Figures are simplified, re-aggregated, and normalized for analytical clarity. They do not represent official company reporting, forecasts, valuation conclusions, or investment advice."
       )
     )
   )

@@ -12,7 +12,7 @@ mod_cash_engine_ui <- function(id) {
     
     # Header
     h2("Cash Engine", style = "color: #004578;"),
-    p("Operating cash flow and free cash flow generation", 
+    p("Operating cash flow and free cash flow trends based on reported financials", 
       style = "color: #605E5C; margin-bottom: 2em;"),
     
     # KPI Cards (MATCHES Executive Brief format)
@@ -97,7 +97,7 @@ mod_cash_engine_ui <- function(id) {
       class = "ui segment",
       style = "margin-top: 2em; padding: 2em;",
       h3("FCF Margin Consistency", style = "color: #004578;"),
-      p("Consistently high FCF margin supports H3 (resilient cash generation)"),
+      p("FCF margin levels provide context for evaluating cash generation resilience (H3)"),
       girafeOutput(ns("chart_fcf_margin"), height = "350px")
     ),
     
@@ -116,19 +116,26 @@ mod_cash_engine_ui <- function(id) {
         style = "display: flex; justify-content: space-between; align-items: center;",
         div(
           style = "flex: 1;",
-          h4("Hypothesis H3: Cash generation resilient despite growth investments", 
+          h4("Hypothesis H3: Cash generation remained resilient during growth investments", 
              style = "color: #004578; margin-bottom: 0.5em;"),
           div(style = "color: #605E5C; font-size: 0.9em; margin-bottom: 0.3em;", "Cash Engine tab")
         ),
         div(
           style = "padding: 0.5em 1em; background: #107C10; color: white; border-radius: 4px; font-weight: 600; font-size: 0.85em;",
-          "✓ SUPPORTED"
+          "✓ Supported"
         )
       ),
       p(
         style = "color: #323130; line-height: 1.6; margin-top: 0.8em;",
         uiOutput(ns("hypothesis_evidence"), inline = TRUE)
+      ),
+      
+      div(
+        style = "margin-top: 1.2em; font-size: 0.85em; color: #605E5C; font-style: italic;",
+        "Free cash flow is presented using a simplified proxy derived from public disclosures. ",
+        "Results are descriptive and do not constitute forecasts or valuation analysis."
       )
+      
     )
   )
 }
@@ -212,7 +219,7 @@ mod_cash_engine_server <- function(id, financials) {
           <li>FCF margin averaged <strong>%.1f%%</strong> from FY2016 to FY2023</li>
           <li>Range: <strong>%.1f%%</strong> to <strong>%.1f%%</strong> (minimal variance)</li>
           <li>Consistently exceeded 30%% threshold throughout the period</li>
-          <li>This supports <strong>H3</strong>: Resilient cash generation despite significant R&D and capex investments</li>
+          <li>This is consistent with <strong>H3</strong>: cash generation remained resilient while the company invested in growth initiatives</li>
         </ul>",
         avg_fcf_margin,
         min_fcf_margin,
